@@ -6,4 +6,4 @@ if ($setproxy); then
     source ~/.bashrc;
     fi
 
-subscription-manager register --username=lorenzhenggeler --password=password --org="sandbox" --activationkey=sandbox
+subscription-manager register --username=$rhnuser --password=$rhnpassword --org=$rhnorg --activationkey=$rhnactivationkey
