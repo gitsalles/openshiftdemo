@@ -4,5 +4,6 @@ if ($setproxy); then
     echo 'export https_proxy=http://$proxy:$proxyport' >> ~/.bashrc
     echo 'export no_proxy=127.0.0.1,localhost,10.,*.sccloudinfra.net' >> ~/.bashrc
     source ~/.bashrc;
+    fi
 
 subscription-manager register --username=lorenzhenggeler --password=password --org="sandbox" --activationkey=sandbox
