@@ -6,6 +6,6 @@ if ($setproxy); then
     source ~/.bashrc;
     fi
 
-subscription-manager register --org=$rhnorg --activationkey=$rhnactivationkey
+subscription-manager register --org=$rhsm_org --activationkey=$rhsm_activationkey
 subscription-manager repos --disable="*"
 subscription-manager repos --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms" --enable="rhel-7-server-ose-3.6-rpms"
