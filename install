@@ -1,7 +1,7 @@
 
-export http_proxy=http://sandboxproxy.sccloudinfra.net:8080
-export https_proxy= http://sandboxproxy.sccloudinfra.net:8080
-export ftp_proxy= http://sandboxproxy.sccloudinfra.net:8080
-export no_proxy=127.0.0.1,localhost
+export http_proxy="http://$proxy:$proxyport"
+export https_proxy=$http_proxy
+export ftp_proxy=$http_proxy
+export no_proxy=127.0.0.1,localhost,10.,*.sccloudinfra.net
 
 subscription-manager register --username=lorenzhenggeler --password=password --org="sandbox" --activationkey=sandbox
