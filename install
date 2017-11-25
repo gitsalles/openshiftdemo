@@ -12,3 +12,7 @@ subscription-manager repos --disable="*"
 subscription-manager repos --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms"
 cd /usr/share/rhn/
 cp RHNS-CA-CERT RHN-ORG-TRUSTED-SSL-CERT
+
+curl -sSL https://github.com/openshift/origin/releases/download/v3.6.0-rc.0/openshift-origin-client-tools-v3.6.0-rc.0-98b3d56-linux-64bit.tar.gz -o oc.tar.gz
+tar xvfz oc.tar.gz
+cp openshift-origin-client-tools-v3.6.0-rc.0-98b3d56-linux-64bit/ $HOME/oc
