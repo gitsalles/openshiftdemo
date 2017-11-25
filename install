@@ -6,4 +6,4 @@ if ($setproxy); then
     source ~/.bashrc;
     fi
 
-subscription-manager register --username=$rhnuser --password=$rhnpassword --org=$rhnorg --activationkey=$rhnactivationkey
+subscription-manager register --org=$rhnorg --activationkey=$rhnactivationkey
