@@ -1,7 +1,8 @@
 
-export http_proxy="http://$proxy:$proxyport"
-export https_proxy=$http_proxy
-export ftp_proxy=$http_proxy
-export no_proxy=127.0.0.1,localhost,10.,*.sccloudinfra.net
+if ($setproxy); then
+    echo 'export http_proxy=http://$proxy:$proxyport' >> ~/.bashrc
+    echo 'export https_proxy=http://$proxy:$proxyport' >> ~/.bashrc
+    echo 'export no_proxy=127.0.0.1,localhost,10.,*.sccloudinfra.net' >> ~/.bashrc
+    source ~/.bashrc;
 
 subscription-manager register --username=lorenzhenggeler --password=password --org="sandbox" --activationkey=sandbox
