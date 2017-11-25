@@ -17,3 +17,7 @@ cd /home/
 curl -sSL https://github.com/openshift/origin/releases/download/v3.6.0-rc.0/openshift-origin-client-tools-v3.6.0-rc.0-98b3d56-linux-64bit.tar.gz -o oc.tar.gz
 tar xvfz oc.tar.gz
 cp openshift-origin-client-tools-v3.6.0-rc.0-98b3d56-linux-64bit/oc /home/
+
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+sudo systemctl status docker
