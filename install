@@ -44,7 +44,7 @@ tar xvfz oc.tar.gz
 cp openshift-origin-client-tools-v3.7.0-rc.0-e92d5c5-linux-64bit/oc $HOME/bin/
 
 if ($proxy_on); then
-        oc cluster up --public-hostname="$myip.nip.io" --routing-suffix="apps.$myip.nip.io" --http-proxy=http://$proxy:$proxyport --https-proxy=https://$proxy:$proxyport --image=registry.access.redhat.com/openshift3/ose --host-data-dir=/var/lib/origin/ocp-data --host-config-dir=/var/lib/origin/openshift.local.config --use-existing-config=true --version=$OCP_VERSION --host-pv-dir=/var/lib/origin/openshift.local.pv
+        oc cluster up --public-hostname="$myip.nip.io" --routing-suffix="apps.$myip.nip.io" --http-proxy=http://$proxy:$proxyport --https-proxy=https://$proxy:$proxyport --no-proxy=*.nip.io --image=registry.access.redhat.com/openshift3/ose --host-data-dir=/var/lib/origin/ocp-data --host-config-dir=/var/lib/origin/openshift.local.config --use-existing-config=true --version=$OCP_VERSION --host-pv-dir=/var/lib/origin/openshift.local.pv
     else
         oc cluster up --public-hostname="$myip.nip.io" --routing-suffix="apps.$myip.nip.io" --image=registry.access.redhat.com/openshift3/ose --host-data-dir=/var/lib/origin/ocp-data --host-config-dir=/var/lib/origin/openshift.local.config --use-existing-config=true --version=$OCP_VERSION --host-pv-dir=/var/lib/origin/openshift.local.pv
     fi
