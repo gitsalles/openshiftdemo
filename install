@@ -14,7 +14,7 @@ PATH="$HOME/bin:$PATH"
 if ($proxy_on); then
         echo "export http_proxy=http://$proxy:$proxyport" >> ~/.bashrc
         echo "export https_proxy=https://$proxy:$proxyport" >> ~/.bashrc
-        echo "export no_proxy=127.0.0.1,localhost,10.,*.sccloudinfra.net" >> ~/.bashrc
+        echo "export no_proxy=127.0.0.1,localhost,*.sccloudinfra.net,10.0.0.0/8,$myip,*.nip.io" >> ~/.bashrc
     fi
     
 source ~/.bashrc
