@@ -27,7 +27,7 @@ subscription-manager repos --enable="rhel-7-server-rpms" --enable="rhel-7-server
 cp /usr/share/rhn/RHNS-CA-CERT /usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT
 
 yum install docker -y
-echo '{"insecure-registries": ["172.30.0.0/16"]}'>> /etc/docker/daemon.json
+echo '{"insecure-registries": ["172.30.0.0/16"]}'> /etc/docker/daemon.json
 if ($proxy_on); then
         mkdir -p /etc/systemd/system/docker.service.d
         touch /etc/systemd/system/docker.service.d/proxy.conf
