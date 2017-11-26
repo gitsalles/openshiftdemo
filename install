@@ -10,8 +10,10 @@ if ($setproxy); then
     echo 'export http_proxy=http://$proxy:$proxyport' >> ~/.bashrc
     echo 'export https_proxy=http://$proxy:$proxyport' >> ~/.bashrc
     echo 'export no_proxy=127.0.0.1,localhost,10.,*.sccloudinfra.net' >> ~/.bashrc
-    source ~/.bashrc;
     fi
+    
+source ~/.bashrc;
+
 subscription-manager clean
 subscription-manager config --server.insecure=1
 subscription-manager register --org=$rhsm_org --activationkey=$rhsm_activationkey
