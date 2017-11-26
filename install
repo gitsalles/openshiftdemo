@@ -7,9 +7,9 @@ mkdir $HOME/bin
 PATH="$HOME/bin:$PATH"
 
 if ($proxy_on); then
-        echo 'export http_proxy=http://$proxy:$proxyport' >> ~/.bashrc
-        echo 'export https_proxy=https://$proxy:$proxyport' >> ~/.bashrc
-        echo 'export no_proxy=127.0.0.1,localhost,10.,*.sccloudinfra.net' >> ~/.bashrc
+        echo "export http_proxy=http://$proxy:$proxyport" >> ~/.bashrc
+        echo "export https_proxy=https://$proxy:$proxyport" >> ~/.bashrc
+        echo "export no_proxy=127.0.0.1,localhost,10.,*.sccloudinfra.net" >> ~/.bashrc
     fi
     
 source ~/.bashrc
@@ -26,9 +26,9 @@ echo '{"insecure-registries": ["172.30.0.0/16"]}'>> /etc/docker/daemon.json
 if ($proxy_on); then
         mkdir -p /etc/systemd/system/docker.service.d
         touch /etc/systemd/system/docker.service.d/proxy.conf
-        echo '[Service]' > /etc/systemd/system/docker.service.d/proxy.conf
-        echo 'Environment=HTTP_PROXY=http://$proxy:$proxyport' >> /etc/systemd/system/docker.service.d/proxy.conf
-        echo 'Environment=HTTPS_PROXY=https://$proxy:$proxyport' >> /etc/systemd/system/docker.service.d/proxy.conf
+        echo "[Service]" > /etc/systemd/system/docker.service.d/proxy.conf
+        echo "Environment=HTTP_PROXY=http://$proxy:$proxyport" >> /etc/systemd/system/docker.service.d/proxy.conf
+        echo "Environment=HTTPS_PROXY=https://$proxy:$proxyport" >> /etc/systemd/system/docker.service.d/proxy.conf
     fi
 sudo systemctl daemon-reload
 sudo systemctl restart docker
