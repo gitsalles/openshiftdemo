@@ -1,3 +1,8 @@
+OC_MAJOR_VER="v3"
+OC_MINOR_VER=6
+OC_MINI_VER=173
+OCP_VERSION="$OC_MAJOR_VER.$OC_MINOR_VER"
+
 #!/bin/bash
 #disable and stop the firewall
 systemctl disable firewalld
@@ -39,4 +44,4 @@ curl -sSL https://github.com/openshift/origin/releases/download/v3.6.0-rc.0/open
 tar xvfz oc.tar.gz
 cp openshift-origin-client-tools-v3.6.0-rc.0-98b3d56-linux-64bit/oc $HOME/bin
 
-oc cluster up --image=registry.access.redhat.com/openshift3/ose --host-data-dir=/var/lib/origin/ocp-data --host-config-dir=/var/lib/origin/openshift.local.config --use-existing-config=true --host-pv-dir=/var/lib/origin/openshift.local.pv --service-catalog
+oc cluster up --image=registry.access.redhat.com/openshift3/ose --host-data-dir=/var/lib/origin/ocp-data --host-config-dir=/var/lib/origin/openshift.local.config --use-existing-config=true --version=$OCP_VERSION --host-pv-dir=/var/lib/origin/openshift.local.pv --service-catalog
