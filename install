@@ -9,7 +9,7 @@ PATH="$HOME/bin:$PATH"
 if ($proxy_on); then
         echo "export http_proxy=http://$proxy:$proxyport" >> ~/.bashrc
         echo "export https_proxy=https://$proxy:$proxyport" >> ~/.bashrc
-        echo "export no_proxy=127.0.0.1,localhost,*.sccloudinfra.net,10.0.0.0/8,$myip,*.nip.io" >> ~/.bashrc
+        echo "export no_proxy=127.0.0.1,localhost,*.sccloudinfra.net,10.0.0.0/8,$my_ip,*.nip.io" >> ~/.bashrc
     fi
     
 source ~/.bashrc
@@ -50,7 +50,12 @@ tar xvfz oc.tar.gz
 cp openshift-origin-client-tools-v3.7.0-rc.0-e92d5c5-linux-64bit/oc $HOME/bin/
 
 if ($proxy_on); then
-        oc cluster up --public-hostname="$myip.nip.io" --routing-suffix="apps.$myip.nip.io" --http-proxy=http://$proxy:$proxyport --https-proxy=https://$proxy:$proxyport -host-data-dir=/var/lib/origin/ocp-data --host-config-dir=/var/lib/origin/openshift.local.config --use-existing-config=true --host-pv-dir=/var/lib/origin/openshift.local.pv
+        oc cluster up --public-hostname="$my_ip.nip.io" --routing-suffix="apps.$my_ip.nip.io" --http-proxy=http://$proxy:$proxyport --https-proxy=https://$proxy:$proxyport -host-data-dir=/var/lib/origin/ocp-data --host-config-dir=/var/lib/origin/openshift.local.config --use-existing-config=true --host-pv-dir=/var/lib/origin/openshift.local.pv
     else
-        oc cluster up --public-hostname="$myip.nip.io" --routing-suffix="apps.$myip.nip.io" --host-data-dir=/var/lib/origin/ocp-data --host-config-dir=/var/lib/origin/openshift.local.config --use-existing-config=true --host-pv-dir=/var/lib/origin/openshift.local.pv
+        oc cluster up --public-hostname="$my_ip.nip.io" --routing-suffix="apps.$my_ip.nip.io" --host-data-dir=/var/lib/origin/ocp-data --host-config-dir=/var/lib/origin/openshift.local.config --use-existing-config=true --host-pv-dir=/var/lib/origin/openshift.local.pv
     fi
+
+#Get My IP adress and store as variable
+my_ip=$(hostname -I | cut -f1 -d ' ')
+echo my IP address is $my_ip
+OpenShift_MasterURL=http://$my_ip:8443
