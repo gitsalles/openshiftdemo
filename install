@@ -12,7 +12,7 @@ if ($setproxy); then
     echo 'export no_proxy=127.0.0.1,localhost,10.,*.sccloudinfra.net' >> ~/.bashrc
     fi
     
-source ~/.bashrc;
+source ~/.bashrc
 
 subscription-manager clean
 subscription-manager config --server.insecure=1
