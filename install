@@ -1,3 +1,10 @@
+#!/bin/bash
+#disable and stop the firewall
+systemctl disable firewalld
+systemctl stop firewalld
+
+mkdir $HOME/bin
+PATH="$HOME/bin:$PATH"
 
 if ($setproxy); then
     echo 'export http_proxy=http://$proxy:$proxyport' >> ~/.bashrc
@@ -10,8 +17,7 @@ subscription-manager config --server.insecure=1
 subscription-manager register --org=$rhsm_org --activationkey=$rhsm_activationkey
 subscription-manager repos --disable="*"
 subscription-manager repos --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms"
-cd /usr/share/rhn/
-cp RHNS-CA-CERT RHN-ORG-TRUSTED-SSL-CERT
+cp /usr/share/rhn/RHNS-CA-CERT /usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT
 
 echo '{"insecure-registries": ["172.30.0.0/16"]}'>> /etc/docker/daemon.json
 sudo systemctl daemon-reload
@@ -21,6 +27,6 @@ sudo systemctl status docker
 cd /home/
 curl -sSL https://github.com/openshift/origin/releases/download/v3.6.0-rc.0/openshift-origin-client-tools-v3.6.0-rc.0-98b3d56-linux-64bit.tar.gz -o oc.tar.gz
 tar xvfz oc.tar.gz
-cp openshift-origin-client-tools-v3.6.0-rc.0-98b3d56-linux-64bit/oc /home/
+cp openshift-origin-client-tools-v3.6.0-rc.0-98b3d56-linux-64bit/oc $HOME/bin
 
 oc cluster up --image=registry.access.redhat.com/openshift3/ose --host-data-dir=/var/lib/origin/ocp-data --docker-machine=openshift --host-config-dir=/var/lib/origin/openshift.local.config --use-existing-config=true --host-pv-dir=/var/lib/origin/openshift.local.pv --service-catalog
