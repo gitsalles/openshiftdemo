@@ -6,7 +6,7 @@ systemctl stop firewalld
 mkdir $HOME/bin
 PATH="$HOME/bin:$PATH"
 
-if ($setproxy); then
+if ($proxy_on); then
     echo 'export http_proxy=http://$proxy:$proxyport' >> ~/.bashrc
     echo 'export https_proxy=http://$proxy:$proxyport' >> ~/.bashrc
     echo 'export no_proxy=127.0.0.1,localhost,10.,*.sccloudinfra.net' >> ~/.bashrc
@@ -21,7 +21,12 @@ subscription-manager repos --disable="*"
 subscription-manager repos --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms"
 cp /usr/share/rhn/RHNS-CA-CERT /usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT
 
+yum install docker -y
 echo '{"insecure-registries": ["172.30.0.0/16"]}'>> /etc/docker/daemon.json
+if ($proxy_on); then
+    echo "export HTTP_PROXY=http://$proxy:$proxyport/" >> /etc/sysconfig/docker
+    echo "export NO_PROXY=172.30.1.1" >> /etc/sysconfig/docker
+    fi
 sudo systemctl daemon-reload
 sudo systemctl restart docker
 sudo systemctl status docker
