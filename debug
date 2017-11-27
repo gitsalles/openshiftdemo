@@ -1,0 +1,1 @@
+/bin/bash -c chmod go-rwx /tmp/69775e0b-cfbe-4136-ba83-d5fed5e8d792;source /tmp/69775e0b-cfbe-4136-ba83-d5fed5e8d792/script.sh /tmp/69775e0b-cfbe-4136-ba83-d5fed5e8d792/task.sh /tmp/69775e0b-cfbe-4136-ba83-d5fed5e8d792/output.properties > /tmp/69775e0b-cfbe-4136-ba83-d5fed5e8d792/task.stdlog 2>&1
