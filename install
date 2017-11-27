@@ -1,23 +1,24 @@
-#!/bin/bash
-#disable and stop the firewall
+echo "disable and stop the firewall"
 systemctl disable firewalld
 systemctl stop firewalld
 
 #Get My IP adress and store as variable
 my_ip=$(hostname -I | cut -f1 -d ' ')
 OpenShift_Master_URL=https://$my_ip:8443
+echo "my IP adress is: $my_ip"
 
-mkdir $HOME/bin
+mkdir -p $HOME/bin
 PATH="$HOME/bin:$PATH"
 
 if ($proxy_on); then
         echo "export http_proxy=http://$proxy:$proxyport" >> ~/.bashrc
         echo "export https_proxy=https://$proxy:$proxyport" >> ~/.bashrc
         echo "export no_proxy=127.0.0.1,localhost,*.sccloudinfra.net,10.0.0.0/8,$my_ip,*.nip.io" >> ~/.bashrc
+		source ~/.bashrc
+		echo "proxy $proxy:$proxyport set"
     fi
-    
-source ~/.bashrc
 
+echo "register with RHSM..."
 subscription-manager clean
 # Set to 1 to disable certificate validation
 subscription-manager config --server.insecure=1
@@ -26,9 +27,18 @@ subscription-manager repos --disable="*"
 subscription-manager repos --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms"
 cp /usr/share/rhn/RHNS-CA-CERT /usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT
 
+echo "install docker..."
 yum install docker -y
+
+echo "install oc client tools..."
+curl -sSL https://github.com/openshift/origin/releases/download/v3.7.0-rc.0/openshift-origin-client-tools-v3.7.0-rc.0-e92d5c5-linux-64bit.tar.gz -o oc.tar.gz
+tar xvfz oc.tar.gz
+cp openshift-origin-client-tools-v3.7.0-rc.0-e92d5c5-linux-64bit/oc $HOME/bin/
+
+echo "configure docker..."
 echo '{"insecure-registries": ["172.30.0.0/16"]}'> /etc/docker/daemon.json
 if ($proxy_on); then
+        echo "configure proxy for docker..."
         mkdir -p /etc/systemd/system/docker.service.d
         touch /etc/systemd/system/docker.service.d/proxy.conf
         echo "[Service]" > /etc/systemd/system/docker.service.d/proxy.conf
@@ -36,7 +46,8 @@ if ($proxy_on); then
         echo "Environment=HTTPS_PROXY=https://$proxy:$proxyport" >> /etc/systemd/system/docker.service.d/proxy.conf
         echo "Environment=NO_PROXY=172.30.1.1" >> /etc/systemd/system/docker.service.d/proxy.conf
     fi
-
+    
+echo "configure docker storage..."
 #Use an additional block device
 cat <<EOF > /etc/sysconfig/docker-storage-setup
 DEVS=/dev/sdb
@@ -49,10 +60,6 @@ sudo systemctl restart docker
 #run docker at system boot
 sudo systemctl enable docker
 
-#install oc client tools
-curl -sSL https://github.com/openshift/origin/releases/download/v3.7.0-rc.0/openshift-origin-client-tools-v3.7.0-rc.0-e92d5c5-linux-64bit.tar.gz -o oc.tar.gz
-tar xvfz oc.tar.gz
-cp openshift-origin-client-tools-v3.7.0-rc.0-e92d5c5-linux-64bit/oc $HOME/bin/
 
 if ($proxy_on); then
         oc cluster up --public-hostname="$my_ip.nip.io" --routing-suffix="apps.$my_ip.nip.io" --http-proxy=http://$proxy:$proxyport --https-proxy=https://$proxy:$proxyport -host-data-dir=/var/lib/origin/ocp-data --host-config-dir=/var/lib/origin/openshift.local.config --use-existing-config=true --host-pv-dir=/var/lib/origin/openshift.local.pv
