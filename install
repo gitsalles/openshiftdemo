@@ -11,11 +11,15 @@ mkdir -p $HOME/bin
 PATH="$HOME/bin:$PATH"
 
 if ($proxy_on); then
+	http_proxy="http://$proxy:$proxy_port"
+	https_proxy="https://$proxy:$proxy_port"
+	no_proxy="127.0.0.1,localhost,*.sccloudinfra.net,10.0.0.0/8,$my_ip,*.nip.io"
+	
         echo "export http_proxy=http://$proxy:$proxy_port" >> ~/.bashrc
         echo "export https_proxy=https://$proxy:$proxy_port" >> ~/.bashrc
         echo "export no_proxy=127.0.0.1,localhost,*.sccloudinfra.net,10.0.0.0/8,$my_ip,*.nip.io" >> ~/.bashrc
-		source ~/.bashrc
-		echo "proxy $proxy:$proxy_port set"
+	source ~/.bashrc
+	echo "proxy $proxy:$proxy_port set"
     fi
 
 echo "register with RHSM..."
