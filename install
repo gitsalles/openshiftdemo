@@ -5,7 +5,7 @@ systemctl stop firewalld
 
 #Get My IP adress and store as variable
 my_ip=$(hostname -I | cut -f1 -d ' ')
-OpenShift_Master_URL=http://$my_ip:8443
+OpenShift_Master_URL=https://$my_ip:8443
 
 mkdir $HOME/bin
 PATH="$HOME/bin:$PATH"
