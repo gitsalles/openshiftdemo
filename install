@@ -10,11 +10,12 @@ echo "my IP adress is: $my_ip"
 mkdir -p $HOME/bin
 PATH="$HOME/bin:$PATH"
 
+echo "register with RHSM..."
+subscription-manager clean
+
 if ($proxy_on); then
-	http_proxy="http://$proxy:$proxy_port"
-	https_proxy="https://$proxy:$proxy_port"
-	no_proxy="127.0.0.1,localhost,*.sccloudinfra.net,10.0.0.0/8,$my_ip,*.nip.io"
-	
+	echo "setting proxy..."
+	subscription-manager config --server.proxy_hostname=$proxy --server.proxy_port=$proxy_port
         echo "export http_proxy=http://$proxy:$proxy_port" >> ~/.bashrc
         echo "export https_proxy=https://$proxy:$proxy_port" >> ~/.bashrc
         echo "export no_proxy=127.0.0.1,localhost,*.sccloudinfra.net,10.0.0.0/8,$my_ip,*.nip.io" >> ~/.bashrc
@@ -22,8 +23,6 @@ if ($proxy_on); then
 	echo "proxy $proxy:$proxy_port set"
     fi
 
-echo "register with RHSM..."
-subscription-manager clean
 # Set to 1 to disable certificate validation
 subscription-manager config --server.insecure=1
 subscription-manager register --org=$rhsm_org --activationkey=$rhsm_activationkey
