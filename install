@@ -62,7 +62,7 @@ sudo systemctl enable docker
 
 
 if ($proxy_on); then
-        oc cluster up --public-hostname="$my_ip.nip.io" --routing-suffix="apps.$my_ip.nip.io" --http-proxy=http://$proxy:$proxyport --https-proxy=https://$proxy:$proxyport -host-data-dir=/var/lib/origin/ocp-data --host-config-dir=/var/lib/origin/openshift.local.config --use-existing-config=true --host-pv-dir=/var/lib/origin/openshift.local.pv
+        oc cluster up --public-hostname="$my_ip.nip.io" --routing-suffix="apps.$my_ip.nip.io" --http-proxy=http://$proxy:$proxy_port --https-proxy=https://$proxy:$proxy_port -host-data-dir=/var/lib/origin/ocp-data --host-config-dir=/var/lib/origin/openshift.local.config --use-existing-config=true --host-pv-dir=/var/lib/origin/openshift.local.pv
     else
         oc cluster up --public-hostname="$my_ip.nip.io" --routing-suffix="apps.$my_ip.nip.io" --host-data-dir=/var/lib/origin/ocp-data --host-config-dir=/var/lib/origin/openshift.local.config --use-existing-config=true --host-pv-dir=/var/lib/origin/openshift.local.pv
     fi
