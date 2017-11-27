@@ -25,7 +25,7 @@ subscription-manager config --server.insecure=1
 subscription-manager register --org=$rhsm_org --activationkey=$rhsm_activationkey
 subscription-manager repos --disable="*"
 subscription-manager repos --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms"
-cp /usr/share/rhn/RHNS-CA-CERT /usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT
+#cp /usr/share/rhn/RHNS-CA-CERT /usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT
 
 echo "install docker..."
 yum install docker -y
